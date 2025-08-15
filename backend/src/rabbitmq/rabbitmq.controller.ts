@@ -1,12 +1,17 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common'; // اضافه کردن Post
 import { RabbitmqService } from './rabbitmq.service';
 
 @Controller('rabbitmq')
 export class RabbitmqController {
-    constructor(private rabitService: RabbitmqService) { }
+  constructor(private rabbitmqService: RabbitmqService) {}
 
-    @Post()
-    sendToQueue(@Body() Body) {
-        return this.rabitService.sendToQueue(Body);
-    }
+  @Get()
+  getStatus() {
+    return { status: 'RabbitMQ is running' };
+  }
+
+  @Post()
+  sendToQueue(@Body() body: any) {
+    return this.rabbitmqService.sendToQueue(body);
+  }
 }
